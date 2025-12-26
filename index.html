@@ -118,16 +118,32 @@
         const App = () => {
             const [activeTab, setActiveTab] = useState(0);
             
-            // 체크리스트 상태 관리
-            const [checklist, setChecklist] = useState([
+            // 기본 체크리스트 데이터
+            const initialChecklist = [
                 { id: 1, text: "여권 & 비자", checked: false },
                 { id: 2, text: "고덕지도(Amap) 설치", checked: false },
                 { id: 3, text: "알리페이/위챗페이 등록", checked: false },
                 { id: 4, text: "따뜻한 옷 (바닷바람 셈!)", checked: false },
                 { id: 5, text: "돼지코(변환 어댑터)", checked: false },
                 { id: 6, text: "보조배터리", checked: false }
-            ]);
+            ];
+
+            // 체크리스트 상태 관리 (localStorage 연동)
+            const [checklist, setChecklist] = useState(() => {
+                const saved = localStorage.getItem("qingdao_trip_checklist");
+                if (saved) {
+                    return JSON.parse(saved);
+                } else {
+                    return initialChecklist;
+                }
+            });
+            
             const [newItem, setNewItem] = useState("");
+
+            // checklist가 변경될 때마다 localStorage에 저장
+            useEffect(() => {
+                localStorage.setItem("qingdao_trip_checklist", JSON.stringify(checklist));
+            }, [checklist]);
 
             // 체크리스트 기능
             const toggleCheck = (id) => {
