@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.2">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ko"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;칭다오 여행 계획&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;display=swap');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: 'Noto Sans KR', sans-serif; background-color: #f3f4f6; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.hide-scrollbar::-webkit-scrollbar { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.animate-fade-in { animation: fadeIn 0.5s ease-out; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { useState, useEffect } = React;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 아이콘 컴포넌트 직접 정의 (외부 라이브러리 의존성 제거)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const IconBase = ({ children, className, size = 24 }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>xmlns="http://www.w3.org/2000/svg"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>width={size}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>height={size}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>viewBox="0 0 24 24"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>fill="none"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>stroke="currentColor"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>strokeWidth="2"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>strokeLinecap="round"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>strokeLinejoin="round"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>className={className}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{children}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Plane = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M2 12h20" /&gt;&lt;path d="M13 2l9 10-9 10" /&gt;&lt;path d="M2 12l5-5m-5 5l5 5" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>); // Using a simplified flight/arrow icon or standard plane</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const PlaneIcon = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M2 12h20"/&gt;&lt;path d="M13 2l9 10-9 10"/&gt;&lt;path d="M2 12l5-5m-5 5l5 5"/&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>{/* Visualizing as a flight path or simple plane */}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M22 2L11 13" /&gt;&lt;path d="M22 2l-7 20-4-9-9-4 20-7z" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Correct Lucide Plane</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const PlaneLucide = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M2 12h20" /&gt;&lt;path d="M13 2l9 10-9 10" /&gt;&lt;path d="M2 12l5-5m-5 5l5 5" fill="none" stroke="none" /&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>{/* Re-drawing standard plane */}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M22 2L11 13" /&gt;&lt;path d="M22 2l-7 20-4-9-9-4 20-7z" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const MapPin = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /&gt;&lt;circle cx="12" cy="10" r="3" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Bed = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M2 4v16" /&gt;&lt;path d="M2 8h18a2 2 0 0 1 2 2v10" /&gt;&lt;path d="M2 17h20" /&gt;&lt;path d="M6 8v9" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Utensils = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" /&gt;&lt;path d="M7 2v20" /&gt;&lt;path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ShoppingBag = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /&gt;&lt;path d="M3 6h18" /&gt;&lt;path d="M16 10a4 4 0 0 1-8 0" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Camera = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" /&gt;&lt;circle cx="12" cy="13" r="3" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Moon = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const AlertCircle = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;circle cx="12" cy="12" r="10" /&gt;&lt;line x1="12" x2="12" y1="8" y2="12" /&gt;&lt;line x1="12" x2="12.01" y1="16" y2="16" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const CheckCircle2 = (props) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;IconBase {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;circle cx="12" cy="12" r="10" /&gt;&lt;path d="m9 12 2 2 4-4" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/IconBase&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const App = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [activeTab, setActiveTab] = useState(0);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 데이터: 일정</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const schedule = [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>day: "1일차",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>date: "12.31 (화)",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "설레는 도착",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>events: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "23:20", title: "인천 출발", desc: "칭다오로 출발! ✈️", icon: &lt;PlaneLucide className="text-blue-500" /&gt;, type: "move" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "23:50", title: "칭다오 공항 도착", desc: "입국 심사 후 짐 찾기", icon: &lt;MapPin className="text-gray-500" /&gt;, type: "move" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "00:30", title: "호텔 체크인", desc: "라마다 바이 윈덤 칭다오 공항", icon: &lt;Bed className="text-indigo-500" /&gt;, type: "hotel", note: "공항 셔틀 또는 택시로 빠르게 이동해서 꿀잠 자기 💤" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>day: "2일차",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>date: "01.01 (수)",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "구시가지 감성 투어",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>events: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "10:00", title: "시내로 이동 &amp; 호텔 환승", desc: "푸신 호텔 (짐 보관)", icon: &lt;Bed className="text-indigo-500" /&gt;, type: "move", note: "공항버스 701번 종점이 호텔 앞! (약 1시간 소요)" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "12:00", title: "점심: 메이다얼", desc: "가지튀김 &amp; 꿔바로우", icon: &lt;Utensils className="text-orange-500" /&gt;, type: "food", note: "구시가지 본점 추천. 가지튀김은 필수!" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "13:30", title: "성 미카엘 천주교당", desc: "핑크 성당 인생샷 📸", icon: &lt;Camera className="text-pink-500" /&gt;, type: "spot" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "14:30", title: "중산로 &amp; 피차이위안", desc: "이국적인 거리 산책", icon: &lt;MapPin className="text-green-500" /&gt;, type: "spot" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "15:30", title: "잔교", desc: "칭다오의 상징, 바다 산책", icon: &lt;MapPin className="text-blue-500" /&gt;, type: "spot", note: "갈매기가 많아요!" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "16:30", title: "은어항 &amp; 소어산", desc: "힙한 골목 카페 &amp; 노을 전망", icon: &lt;Camera className="text-purple-500" /&gt;, type: "spot", note: "소어산 전망대에서 보는 붉은 지붕 뷰가 최고" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "19:00", title: "타이동 야시장", desc: "길거리 음식 &amp; 야경", icon: &lt;ShoppingBag className="text-yellow-500" /&gt;, type: "spot", note: "양꼬치, 굴구이 등 간식 천국" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>day: "3일차",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>date: "01.02 (목)",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "쇼핑 &amp; 화려한 야경",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>events: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "10:00", title: "찌모루 시장", desc: "짝퉁 시장 구경 (흥정 필수!)", icon: &lt;ShoppingBag className="text-yellow-500" /&gt;, type: "spot" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "12:30", title: "점심: 쌍합원", desc: "돼지고기 만두 &amp; 탕수리지", icon: &lt;Utensils className="text-orange-500" /&gt;, type: "food", note: "✨ 추천메뉴: 돼지고기 부추 물만두, 탕수육, 계란볶음밥 (해물 X)" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "14:30", title: "믹스몰 &amp; 5.4 광장", desc: "초대형 쇼핑몰 &amp; 랜드마크", icon: &lt;MapPin className="text-red-500" /&gt;, type: "spot", note: "'오월의 바람' 조형물 앞에서 사진 찍기" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "17:30", title: "저녁: 루위 2013", desc: "카오위 (농어 구이)", icon: &lt;Utensils className="text-orange-500" /&gt;, type: "food", note: "믹스몰 내 위치. 마늘맛 추천! (비린내 없는 찜닭 느낌)" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "19:30", title: "불야성 (명월산해간)", desc: "압도적인 야경과 공연", icon: &lt;Moon className="text-purple-600" /&gt;, type: "spot", note: "🚨 이동시간 왕복 주의 (편도 50분). 화려함의 끝판왕!" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>day: "4일차",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>date: "01.03 (금)",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "미식 &amp; 컴백홈",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>events: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "11:00", title: "체크아웃", desc: "짐 맡기고 마지막 일정", icon: &lt;Bed className="text-indigo-500" /&gt;, type: "hotel" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "12:00", title: "점심: 바누 훠궈", desc: "프리미엄 훠궈", icon: &lt;Utensils className="text-orange-500" /&gt;, type: "food", note: "소고기, 양고기 위주로 주문! 서비스 최고" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "14:00", title: "라스트 쇼핑", desc: "까르푸 / 편의점 털기", icon: &lt;ShoppingBag className="text-yellow-500" /&gt;, type: "spot", note: "칭다오 맥주, 꿀땅콩, 과자 기념품 구매" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "16:30", title: "공항으로 출발", desc: "여유 있게 출발하세요", icon: &lt;PlaneLucide className="text-blue-500" /&gt;, type: "move" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ time: "19:50", title: "인천행 출발", desc: "안녕, 칭다오! 👋", icon: &lt;PlaneLucide className="text-blue-500" /&gt;, type: "move" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const tips = [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ title: "필수 준비물", items: ["여권 &amp; 비자", "고덕지도(Amap) 설치", "알리페이/위챗페이 등록", "따뜻한 옷 (바닷바람 셈!)"] },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ title: "쌍합원 주문 팁 (해물 X)", items: ["돼지고기 부추 물만두 (주로우 지우차이 수이지아오)", "탕수리지 (탕수육) or 꿔바로우", "계란볶음밥 (단차오판)", "라즈지 (매운 닭날개)"] },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ title: "교통 팁", items: ["택시비가 저렴해요 (기본요금 10위안~)", "출퇴근 시간엔 지하철 추천", "불야성은 거리가 머니 시간 넉넉히!"] }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="max-w-md mx-auto min-h-screen bg-gray-50 shadow-xl overflow-hidden relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Header */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="bg-blue-600 p-6 text-white rounded-b-3xl shadow-lg relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex justify-between items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h2 className="text-sm opacity-80 mb-1"&gt;2024.12.31 - 2025.01.03&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h1 className="text-2xl font-bold"&gt;칭다오 여행 ✈️&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p className="text-sm mt-2 opacity-90"&gt;3박 4일 알짜배기 코스&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span className="text-2xl"&gt;🇨🇳&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Navigation Tabs */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex overflow-x-auto p-4 gap-2 hide-scrollbar sticky top-0 bg-gray-50 z-20 pb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{schedule.map((day, idx) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>key={idx}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; setActiveTab(idx)}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium transition-all ${</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>activeTab === idx<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>? "bg-blue-600 text-white shadow-md"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>: "bg-white text-gray-500 border border-gray-200"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}`}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{day.day}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>onClick={() =&gt; setActiveTab(4)}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium transition-all ${</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>activeTab === 4</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>? "bg-green-600 text-white shadow-md"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>: "bg-white text-gray-500 border border-gray-200"</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}`}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>꿀팁 &amp; 체크 ✔️</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Content Area */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="p-4 pb-20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{activeTab &lt; 4 ? (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="space-y-4 animate-fade-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-lg font-bold text-gray-800 flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>📅 {schedule[activeTab].date}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-gray-500 text-sm"&gt;{schedule[activeTab].title}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="space-y-6 pl-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{schedule[activeTab].events.map((event, idx) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div key={idx} className="relative pl-8 border-l-2 border-gray-200 last:border-0 pb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;div className="absolute -left-[9px] top-0 bg-white p-1 rounded-full border border-gray-200 shadow-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>{React.cloneElement(event.icon, { size: 16 })}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;div className="flex justify-between items-start mb-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;span className="text-blue-600 font-bold text-sm bg-blue-50 px-2 py-0.5 rounded-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>{event.time}</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>{event.type === 'food' &amp;&amp; &lt;span className="text-xs text-orange-500 bg-orange-50 px-2 py-0.5 rounded-full font-medium"&gt;맛집&lt;/span&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>{event.type === 'spot' &amp;&amp; &lt;span className="text-xs text-green-500 bg-green-50 px-2 py-0.5 rounded-full font-medium"&gt;관광&lt;/span&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;h4 className="font-bold text-gray-800 text-lg mb-1"&gt;{event.title}&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-gray-600 text-sm mb-2"&gt;{event.desc}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>{event.note &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;div className="bg-yellow-50 p-2 rounded-lg flex items-start gap-2 mt-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;AlertCircle size={14} className="text-yellow-600 shrink-0 mt-0.5" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;p className="text-xs text-yellow-700 font-medium"&gt;{event.note}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>) : (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="space-y-4 animate-fade-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-lg font-bold text-gray-800 mb-2"&gt;💡 여행 꿀팁 모음&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-sm text-gray-500 mb-4"&gt;즐거운 여행을 위한 체크리스트!&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                                </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{tips.map((tip, idx) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div key={idx} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;CheckCircle2 size={18} className="text-green-500" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>{tip.title}</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;ul className="space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>{tip.items.map((item, i) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;li key={i} className="text-sm text-gray-600 flex items-start gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;span className="text-gray-300"&gt;•&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>{item}</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
