@@ -23,7 +23,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // 아이콘 컴포넌트 직접 정의 (외부 라이브러리 의존성 제거)
+        // 아이콘 컴포넌트 직접 정의
         const IconBase = ({ children, className, size = 24 }) => (
             <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -41,23 +41,9 @@
             </svg>
         );
 
-        const Plane = (props) => (
-            <IconBase {...props}>
-                <path d="M2 12h20" /><path d="M13 2l9 10-9 10" /><path d="M2 12l5-5m-5 5l5 5" />
-            </IconBase>
-        ); // Using a simplified flight/arrow icon or standard plane
-        const PlaneIcon = (props) => (
-             <IconBase {...props}>
-                <path d="M2 12h20"/><path d="M13 2l9 10-9 10"/><path d="M2 12l5-5m-5 5l5 5"/> 
-                {/* Visualizing as a flight path or simple plane */}
-                <path d="M22 2L11 13" /><path d="M22 2l-7 20-4-9-9-4 20-7z" />
-            </IconBase>
-        );
-        // Correct Lucide Plane
         const PlaneLucide = (props) => (
             <IconBase {...props}>
                 <path d="M2 12h20" /><path d="M13 2l9 10-9 10" /><path d="M2 12l5-5m-5 5l5 5" fill="none" stroke="none" /> 
-                {/* Re-drawing standard plane */}
                 <path d="M22 2L11 13" /><path d="M22 2l-7 20-4-9-9-4 20-7z" />
             </IconBase>
         );
@@ -110,8 +96,57 @@
             </IconBase>
         );
 
+        // 추가된 아이콘
+        const Circle = (props) => (
+            <IconBase {...props}>
+                <circle cx="12" cy="12" r="10" />
+            </IconBase>
+        );
+
+        const Plus = (props) => (
+            <IconBase {...props}>
+                <path d="M5 12h14" /><path d="M12 5v14" />
+            </IconBase>
+        );
+
+        const Trash2 = (props) => (
+            <IconBase {...props}>
+                <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" />
+            </IconBase>
+        );
+
         const App = () => {
             const [activeTab, setActiveTab] = useState(0);
+            
+            // 체크리스트 상태 관리
+            const [checklist, setChecklist] = useState([
+                { id: 1, text: "여권 & 비자", checked: false },
+                { id: 2, text: "고덕지도(Amap) 설치", checked: false },
+                { id: 3, text: "알리페이/위챗페이 등록", checked: false },
+                { id: 4, text: "따뜻한 옷 (바닷바람 셈!)", checked: false },
+                { id: 5, text: "돼지코(변환 어댑터)", checked: false },
+                { id: 6, text: "보조배터리", checked: false }
+            ]);
+            const [newItem, setNewItem] = useState("");
+
+            // 체크리스트 기능
+            const toggleCheck = (id) => {
+                setChecklist(checklist.map(item => 
+                    item.id === id ? { ...item, checked: !item.checked } : item
+                ));
+            };
+
+            const addItem = (e) => {
+                e.preventDefault();
+                if (!newItem.trim()) return;
+                const newId = checklist.length > 0 ? Math.max(...checklist.map(item => item.id)) + 1 : 1;
+                setChecklist([...checklist, { id: newId, text: newItem, checked: false }]);
+                setNewItem("");
+            };
+
+            const deleteItem = (id) => {
+                setChecklist(checklist.filter(item => item.id !== id));
+            };
 
             // 데이터: 일정
             const schedule = [
@@ -166,7 +201,7 @@
             ];
 
             const tips = [
-                { title: "필수 준비물", items: ["여권 & 비자", "고덕지도(Amap) 설치", "알리페이/위챗페이 등록", "따뜻한 옷 (바닷바람 셈!)"] },
+                // 필수 준비물은 위쪽 체크리스트로 이동됨
                 { title: "쌍합원 주문 팁 (해물 X)", items: ["돼지고기 부추 물만두 (주로우 지우차이 수이지아오)", "탕수리지 (탕수육) or 꿔바로우", "계란볶음밥 (단차오판)", "라즈지 (매운 닭날개)"] },
                 { title: "교통 팁", items: ["택시비가 저렴해요 (기본요금 10위안~)", "출퇴근 시간엔 지하철 추천", "불야성은 거리가 머니 시간 넉넉히!"] }
             ];
@@ -254,15 +289,91 @@
                             </div>
                         ) : (
                             <div className="space-y-4 animate-fade-in">
+                                {/* Checklist Section */}
+                                <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4">
+                                    <h3 className="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
+                                        <CheckCircle2 size={20} className="text-blue-600" />
+                                        준비물 체크리스트
+                                    </h3>
+                                    <p className="text-sm text-gray-500 mb-4">터치해서 챙긴 물건을 지워보세요!</p>
+                                    
+                                    {/* Input Form */}
+                                    <form onSubmit={addItem} className="flex gap-2 mb-4">
+                                        <input 
+                                            type="text" 
+                                            value={newItem}
+                                            onChange={(e) => setNewItem(e.target.value)}
+                                            placeholder="준비물 추가하기..." 
+                                            className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+                                        />
+                                        <button 
+                                            type="submit"
+                                            className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                        >
+                                            <Plus size={20} />
+                                        </button>
+                                    </form>
+
+                                    {/* Checklist Items */}
+                                    <div className="space-y-2">
+                                        {checklist.map((item) => (
+                                            <div 
+                                                key={item.id} 
+                                                className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${
+                                                    item.checked 
+                                                    ? "bg-gray-50 border-gray-100" 
+                                                    : "bg-white border-gray-200 hover:border-blue-300"
+                                                }`}
+                                            >
+                                                <div 
+                                                    className="flex items-center gap-3 flex-1"
+                                                    onClick={() => toggleCheck(item.id)}
+                                                >
+                                                    <div className={`${
+                                                        item.checked ? "text-green-500" : "text-gray-300"
+                                                    } transition-colors`}>
+                                                        {item.checked ? <CheckCircle2 size={22} /> : <Circle size={22} />}
+                                                    </div>
+                                                    <span className={`text-sm font-medium transition-all ${
+                                                        item.checked ? "text-gray-400 line-through" : "text-gray-700"
+                                                    }`}>
+                                                        {item.text}
+                                                    </span>
+                                                </div>
+                                                <button 
+                                                    onClick={() => deleteItem(item.id)}
+                                                    className="text-gray-400 hover:text-red-500 p-1"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    
+                                    {/* Progress Bar */}
+                                    <div className="mt-4 pt-4 border-t border-gray-100">
+                                        <div className="flex justify-between text-xs text-gray-500 mb-1">
+                                            <span>진행률</span>
+                                            <span>{Math.round((checklist.filter(i => i.checked).length / checklist.length) * 100)}%</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 rounded-full h-2">
+                                            <div 
+                                                className="bg-green-500 h-2 rounded-full transition-all duration-300" 
+                                                style={{ width: `${(checklist.filter(i => i.checked).length / checklist.length) * 100}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Tips Section */}
                                 <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-                                    <h3 className="text-lg font-bold text-gray-800 mb-2">💡 여행 꿀팁 모음</h3>
-                                    <p className="text-sm text-gray-500 mb-4">즐거운 여행을 위한 체크리스트!</p>
+                                    <h3 className="text-lg font-bold text-gray-800 mb-2">💡 알아두면 쓸모있는 팁</h3>
                                 </div>
                                 
                                 {tips.map((tip, idx) => (
                                     <div key={idx} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
                                         <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                                            <CheckCircle2 size={18} className="text-green-500" />
+                                            <AlertCircle size={18} className="text-orange-500" />
                                             {tip.title}
                                         </h4>
                                         <ul className="space-y-2">
